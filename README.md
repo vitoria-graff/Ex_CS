@@ -1,4 +1,4 @@
-# Sistema de Escola (Microserviços Alunos e Disciplinas)
+# Closed Cras (Microserviços Alunos e Disciplinas)
 
 Dois microserviços Spring Boot 3 (Java 21):
 - microservico-alunos (porta 8081)
