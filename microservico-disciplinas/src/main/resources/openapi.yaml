@@ -1,0 +1,74 @@
+openapi: 3.0.3
+info:
+  title: Disciplinas API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8082
+paths:
+  /disciplinas:
+    post:
+      tags: [Disciplinas]
+      operationId: createDisciplina
+      summary: Cadastrar disciplina
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DisciplinaInput'
+      responses:
+        '201':
+          description: Criado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Disciplina'
+    get:
+      tags: [Disciplinas]
+      operationId: listDisciplinas
+      summary: Listar/Buscar disciplinas
+      parameters:
+        - in: query
+          name: nome
+          schema:
+            type: string
+          required: false
+          description: Filtro por parte do nome
+        - in: query
+          name: codigo
+          schema:
+            type: string
+          required: false
+          description: Filtro por código
+        - in: query
+          name: horario
+          schema:
+            type: string
+            enum: [A,B,C,D,E,F,G]
+          required: false
+          description: Filtro por horário
+      responses:
+        '200':
+          description: Lista de disciplinas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Disciplina'
+components:
+  schemas:
+    DisciplinaInput:
+      type: object
+      required: [codigo, nome, horario]
+      properties:
+        codigo:
+          type: string
+        nome:
+          type: string
+        horario:
+          type: string
+          enum: [A,B,C,D,E,F,G]
+    Disciplina:
+      allOf:
+        - $ref: '#/components/schemas/DisciplinaInput'

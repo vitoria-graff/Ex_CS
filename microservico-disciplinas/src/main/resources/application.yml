@@ -1,0 +1,17 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: microservico-disciplinas
+  datasource:
+    url: jdbc:h2:mem:disciplinasdb;DB_CLOSE_DELAY=-1
+    driverClassName: org.h2.Driver
+    username: sa
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true

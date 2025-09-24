@@ -1,0 +1,82 @@
+openapi: 3.0.3
+info:
+  title: Alunos API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8081
+paths:
+  /alunos:
+    post:
+      tags: [Alunos]
+      operationId: createAluno
+      summary: Cadastrar estudante
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlunoInput'
+      responses:
+        '201':
+          description: Criado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Aluno'
+        '400':
+          description: Requisição inválida
+    get:
+      tags: [Alunos]
+      operationId: listAlunos
+      summary: Consultar estudantes por pedaço do nome
+      parameters:
+        - in: query
+          name: nome
+          schema:
+            type: string
+          required: false
+          description: Filtro por parte do nome (case-insensitive)
+      responses:
+        '200':
+          description: Lista de estudantes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Aluno'
+  /alunos/{matricula}:
+    get:
+      tags: [Alunos]
+      operationId: getAlunoByMatricula
+      summary: Consultar estudante por matrícula
+      parameters:
+        - in: path
+          name: matricula
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Estudante encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Aluno'
+        '404':
+          description: Não encontrado
+components:
+  schemas:
+    AlunoInput:
+      type: object
+      required: [nome, matricula]
+      properties:
+        nome:
+          type: string
+          minLength: 1
+        matricula:
+          type: string
+          minLength: 1
+    Aluno:
+      allOf:
+        - $ref: '#/components/schemas/AlunoInput'
